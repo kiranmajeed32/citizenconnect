@@ -158,7 +158,7 @@ public class FragmentFeedback extends Fragment {
     public void sendMessage() {
         Toast.makeText(getActivity(), "Sending", Toast.LENGTH_LONG).show();
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, getString(R.string.sendEmailURL), response -> {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, getString(R.string.sendFeedbackURL), response -> {
             try {
                 Log.i("response123 = ", response);
                 JSONObject jsonResponse = new JSONObject(response);
