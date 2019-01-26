@@ -26,6 +26,8 @@ public class NotificationLayoutAdapter extends RecyclerView.Adapter<Notification
     Context mContext;
     private LayoutInflater inflater;
     OnItemInteractionListener mListener;
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG = 0;
 
     public NotificationLayoutAdapter(Context mContext, List<Notifications> snapList, OnItemInteractionListener mListener) {
         this.notificationList = snapList;
@@ -36,7 +38,17 @@ public class NotificationLayoutAdapter extends RecyclerView.Adapter<Notification
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.notification_layout, parent, false);
+        View itemView;
+        switch (viewType) {
+            case VIEW_PROG:
+                itemView = LayoutInflater.from(mContext).inflate(R.layout.progress_bar, parent, false);
+                break;
+            case VIEW_ITEM:
+                itemView = LayoutInflater.from(mContext).inflate(R.layout.notification_layout, parent, false);
+                break;
+                default:
+                    itemView = LayoutInflater.from(mContext).inflate(R.layout.notification_layout, parent, false);
+        }
         return new MyViewHolder(itemView);
     }
 
@@ -50,6 +62,11 @@ public class NotificationLayoutAdapter extends RecyclerView.Adapter<Notification
     @Override
     public int getItemCount() {
         return notificationList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return notificationList.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -81,7 +98,6 @@ public class NotificationLayoutAdapter extends RecyclerView.Adapter<Notification
 
     public interface OnItemInteractionListener {
         void ShareImageClickListener(int position, Drawable image);
-
         void FullSizeImageClickListener(String imagePath, String description);
 
     }
